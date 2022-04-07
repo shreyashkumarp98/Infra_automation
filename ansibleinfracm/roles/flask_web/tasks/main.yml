@@ -2,3 +2,17 @@
       pip:
         name: ['flask', 'flask-mysql']
         state: present
+    
+    - name: copy aplication
+      copy: src=../../../../app.py dest=/opt/app.py
+
+    - name: copy req
+      copy: src=../../../../requirements.txt dest=/opt/requirements.txt
+
+    - name: start appli
+      shell: Flask_APP=/opt/app.py nohup flask run --host=0.0.0.0 &
+      register: op
+
+    - debug:
+        var: op.stdout_lines
+
